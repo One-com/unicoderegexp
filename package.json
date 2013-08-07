@@ -1,0 +1,42 @@
+{
+  "name": "unicoderegexp",
+  "description": "Regular expressions for various Unicode character classes extracted from XRegExp",
+  "keywords": [
+    "unicode",
+    "regular expression",
+    "regexp",
+    "regex",
+    "characters",
+    "printable"
+  ],
+  "scripts": {
+    "prepublish": "make lint test",
+    "test": "make lint test"
+  },
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=0.4.0"
+  },
+  "dependencies": {
+    "one-validation": "=0.4.2",
+    "passerror": "=0.0.1",
+    "underscore": "=1.3.3",
+    "xregexp": "=1.5.0"
+  },
+  "optionalDependencies": {
+    "ain2-papandreou": "=0.1.5"
+  },
+  "devDependencies": {
+    "expect.js": "=0.2.0",
+    "jshint": "=2.1.4",
+    "mocha": "=1.12.0"
+  },
+  "main": "lib/unicodeRegExp.js",
+  "repository": {
+    "type": "git",
+    "url": "svn+ssh://git.one.com/git/node-unicoderegexp.git"
+  },
+  "publishConfig": {
+    "registry": "http://npm.one.com/"
+  }
+}

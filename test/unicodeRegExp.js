@@ -1,5 +1,4 @@
-var _ = require('underscore'),
-    expect = require('expect.js'),
+var expect = require('chai').expect,
     unicodeRegExp = require('../lib/unicodeRegExp');
 
 /*global describe,it*/
@@ -46,8 +45,9 @@ var unicodes = {
 };
 
 describe('Unicode RegExp', function () {
+    Object.keys(unicodes).forEach(function (name) {
+        var vow = unicodes[name];
 
-    _(unicodes).forEach(function (vow, name) {
         describe(name, function () {
             vow();
         });

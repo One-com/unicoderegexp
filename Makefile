@@ -7,7 +7,7 @@ test:
 
 .PHONY: lint
 lint:
-	@./node_modules/.bin/one-lint-js --backend lib
+	@./node_modules/.bin/one-lint-js --backend `find lib -type f | grep -v 3rdparty`
 
 .PHONY: git-hook
 git-hook:

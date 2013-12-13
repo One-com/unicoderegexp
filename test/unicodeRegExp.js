@@ -1,55 +1,130 @@
-var expect = require('chai').expect,
-    unicodeRegExp = require('../lib/unicodeRegExp');
-
 /*global describe,it*/
 
-function createVow(regExp, ch, expectedResultRegExp) {
-    return function () {
-        it("Should be re-written to " + expectedResultRegExp.source, function () {
-            var res = unicodeRegExp.removeCharacterFromCharacterClassRegExp(
-                regExp, ch);
-            expect(res.source).to.equal(expectedResultRegExp.source);
+var unexpected = require('unexpected');
+    unicodeRegExp = require('../lib/unicodeRegExp');
+
+describe('unicodeRegExp', function () {
+    describe('#removeCharacterFromCharacterClassRegExp()', function () {
+        var expect = unexpected.clone();
+
+        expect.addAssertion('[not] to be rewritten to', function (value) {
+            this.assert(unicodeRegExp.removeCharacterFromCharacterClassRegExp(this.obj[0], this.obj[1]), 'to equal', value);
         });
-    };
-}
 
-var unicodes = {
-    'empty character class': createVow(new RegExp("[]"), 'a', new RegExp("[]")),
-    'single matching char': createVow(/[a]/, 'a', new RegExp("[]")),
-    'single matching char, \\u syntax': createVow(/[\u0061]/, 'a', new RegExp("[]")),
-    'single matching char, \\x syntax': createVow(/[\x61]/, 'a', new RegExp("[]")),
-    'single non-matching char': createVow(/[a]/, 'b', /[a]/),
-    'single non-matching char, \\x syntax': createVow(/[\x61]/, 'b', /[a]/),
-    'multiple chars, remove first': createVow(/[abc]/, 'a', /[bc]/),
-    'multiple chars, remove first, \\u syntax': createVow(/[\u0061\u0062\u0063]/, 'a', /[bc]/),
-    'multiple chars, remove first, \\x syntax': createVow(/[\x61\x62\x63]/, 'a', /[bc]/),
-    'multiple chars, remove second': createVow(/[abc]/, 'b', /[ac]/),
-    'multiple chars, remove second, \\u syntax': createVow(/[\u0061\u0062\u0063]/, 'b', /[ac]/),
-    'multiple chars, remove second, \\x syntax': createVow(/[\x61\x62\x63]/, 'b', /[ac]/),
-    'single range, remove first char': createVow(/[a-z]/, 'a', /[b-z]/),
-    'single range, remove first char, \\u syntax': createVow(/[\u0061-\u007a]/, 'a', /[b-z]/),
-    'single range, remove first char, \\x syntax': createVow(/[\x61-\x7a]/, 'a', /[b-z]/),
-    'single range, remove second char': createVow(/[a-z]/, 'b', /[ac-z]/),
-    'single range, remove second char, \\u syntax': createVow(/[\u0061-\u007a]/, 'b', /[ac-z]/),
-    'single range, remove second char, \\x syntax': createVow(/[\x61-\x7a]/, 'b', /[ac-z]/),
-    'single range, remove last char but one': createVow(/[a-z]/, 'y', /[a-xz]/),
-    'single range, remove last char but one, \\u syntax': createVow(/[\u0061-\u007a]/, 'y', /[a-xz]/),
-    'single range, remove last char but one, \\x syntax': createVow(/[\x61-\x7a]/, 'y', /[a-xz]/),
-    'single range, remove last char': createVow(/[a-z]/, 'z', /[a-y]/),
-    'single range, remove last char, \\u syntax': createVow(/[\u0061-\u007a]/, 'z', /[a-y]/),
-    'single range, remove last char, \\x syntax': createVow(/[\x61-\x7a]/, 'z', /[a-y]/),
-    'multiple ranges, remove first char': createVow(/[0-9a-z]/, 'a', /[0-9b-z]/),
-    'multiple ranges, remove second char': createVow(/[0-9a-z]/, 'b', /[0-9ac-z]/),
-    'multiple ranges, remove last char but one': createVow(/[0-9a-z]/, 'y', /[0-9a-xz]/),
-    'multiple ranges, remove last char': createVow(/[0-9a-z]/, 'z', /[0-9a-y]/)
-};
+        it('should handle an empty character class', function () {
+            expect([new RegExp('[]'), 'a'], 'to be rewritten to', new RegExp("[]"));
+        });
 
-describe('Unicode RegExp', function () {
-    Object.keys(unicodes).forEach(function (name) {
-        var vow = unicodes[name];
+        it('should remove the only char', function () {
+            expect([/[a]/, 'a'], 'to be rewritten to', new RegExp("[]"));
+        });
 
-        describe(name, function () {
-            vow();
+        it('should remove the only char in \\u... syntax', function () {
+            expect([/[\u0061]/, 'a'], 'to be rewritten to', new RegExp("[]"));
+        });
+
+        it('should remove single matching char, \\u syntax', function () {
+            expect([/[\u0061]/, 'a'], 'to be rewritten to', new RegExp("[]"));
+        });
+
+        it('should remove single matching char, \\x syntax', function () {
+            expect([/[\x61]/, 'a'], 'to be rewritten to', new RegExp("[]"));
+        });
+
+        it('should remove single non-matching char', function () {
+            expect([/[a]/, 'b'], 'to be rewritten to', /[a]/);
+        });
+
+        it('should remove single non-matching char, \\x syntax', function () {
+            expect([/[\x61]/, 'b'], 'to be rewritten to', /[a]/);
+        });
+
+        it('should remove multiple chars, remove first', function () {
+            expect([/[abc]/, 'a'], 'to be rewritten to', /[bc]/);
+        });
+
+        it('should remove multiple chars, remove first, \\u syntax', function () {
+            expect([/[\u0061\u0062\u0063]/, 'a'], 'to be rewritten to', /[bc]/);
+        });
+
+        it('should remove multiple chars, remove first, \\x syntax', function () {
+            expect([/[\x61\x62\x63]/, 'a'], 'to be rewritten to', /[bc]/);
+        });
+
+        it('should remove multiple chars, remove second', function () {
+            expect([/[abc]/, 'b'], 'to be rewritten to', /[ac]/);
+        });
+
+        it('should remove multiple chars, remove second, \\u syntax', function () {
+            expect([/[\u0061\u0062\u0063]/, 'b'], 'to be rewritten to', /[ac]/);
+        });
+
+        it('should remove multiple chars, remove second, \\x syntax', function () {
+            expect([/[\x61\x62\x63]/, 'b'], 'to be rewritten to', /[ac]/);
+        });
+
+        it('should remove single range, remove first char', function () {
+            expect([/[a-z]/, 'a'], 'to be rewritten to', /[b-z]/);
+        });
+
+        it('should remove single range, remove first char, \\u syntax', function () {
+            expect([/[\u0061-\u007a]/, 'a'], 'to be rewritten to', /[b-z]/);
+        });
+
+        it('should remove single range, remove first char, \\x syntax', function () {
+            expect([/[\x61-\x7a]/, 'a'], 'to be rewritten to', /[b-z]/);
+        });
+
+        it('should remove single range, remove second char', function () {
+            expect([/[a-z]/, 'b'], 'to be rewritten to', /[ac-z]/);
+        });
+
+        it('should remove single range, remove second char, \\u syntax', function () {
+            expect([/[\u0061-\u007a]/, 'b'], 'to be rewritten to', /[ac-z]/);
+        });
+
+        it('should remove single range, remove second char, \\x syntax', function () {
+            expect([/[\x61-\x7a]/, 'b'], 'to be rewritten to', /[ac-z]/);
+        });
+
+        it('should remove single range, remove last char but one', function () {
+            expect([/[a-z]/, 'y'], 'to be rewritten to', /[a-xz]/);
+        });
+
+        it('should remove single range, remove last char but one, \\u syntax', function () {
+            expect([/[\u0061-\u007a]/, 'y'], 'to be rewritten to', /[a-xz]/);
+        });
+
+        it('should remove single range, remove last char but one, \\x syntax', function () {
+            expect([/[\x61-\x7a]/, 'y'], 'to be rewritten to', /[a-xz]/);
+        });
+
+        it('should remove single range, remove last char', function () {
+            expect([/[a-z]/, 'z'], 'to be rewritten to', /[a-y]/);
+        });
+
+        it('should remove single range, remove last char, \\u syntax', function () {
+            expect([/[\u0061-\u007a]/, 'z'], 'to be rewritten to', /[a-y]/);
+        });
+
+        it('should remove single range, remove last char, \\x syntax', function () {
+            expect([/[\x61-\x7a]/, 'z'], 'to be rewritten to', /[a-y]/);
+        });
+
+        it('should remove multiple ranges, remove first char', function () {
+            expect([/[0-9a-z]/, 'a'], 'to be rewritten to', /[0-9b-z]/);
+        });
+
+        it('should remove multiple ranges, remove second char', function () {
+            expect([/[0-9a-z]/, 'b'], 'to be rewritten to', /[0-9ac-z]/);
+        });
+
+        it('should remove multiple ranges, remove last char but one', function () {
+            expect([/[0-9a-z]/, 'y'], 'to be rewritten to', /[0-9a-xz]/);
+        });
+
+        it('should remove multiple ranges, remove last char', function () {
+            expect([/[0-9a-z]/, 'z'], 'to be rewritten to', /[0-9a-y]/)
         });
     });
 });

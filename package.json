@@ -26,8 +26,5 @@
   "repository": {
     "type": "git",
     "url": "svn+ssh://git.one.com/git/node-unicoderegexp.git"
-  },
-  "publishConfig": {
-    "registry": "http://npm.one.com/"
   }
 }

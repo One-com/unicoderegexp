@@ -13,7 +13,7 @@
     "prepublish": "make lint test",
     "test": "make lint test"
   },
-  "version": "0.2.2",
+  "version": "0.2.3",
   "dependencies": {
     "xregexp": "=2.0.0"
   },

@@ -1,13 +1,9 @@
-.PHONY: all test lint
+.PHONY: all test
 
-all: lint test
+all: test
 
 test:
 	./node_modules/.bin/mocha -R spec
-
-.PHONY: lint
-lint:
-	@./node_modules/.bin/one-lint-js --backend `find lib -type f | grep -v 3rdparty`
 
 .PHONY: git-hook
 git-hook:
@@ -15,4 +11,4 @@ git-hook:
 	chmod +x .git/hooks/pre-commit
 
 .PHONY: git-pre-commit
-git-pre-commit: lint
+git-pre-commit: test

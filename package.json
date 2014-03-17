@@ -10,8 +10,8 @@
     "printable"
   ],
   "scripts": {
-    "prepublish": "make lint test",
-    "test": "make lint test"
+    "prepublish": "make test",
+    "test": "make test"
   },
   "version": "0.2.3",
   "dependencies": {

@@ -24,6 +24,6 @@
   "main": "lib/unicodeRegExp.js",
   "repository": {
     "type": "git",
-    "url": "svn+ssh://git.one.com/git/node-unicoderegexp.git"
+    "url": "git://github.com/One-com/unicoderegexp.git"
   }
 }

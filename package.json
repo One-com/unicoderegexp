@@ -13,7 +13,7 @@
     "prepublish": "make test",
     "test": "make test"
   },
-  "version": "0.2.4",
+  "version": "0.3.0",
   "dependencies": {},
   "devDependencies": {
     "mocha": "=1.18.0",

@@ -14,12 +14,11 @@
     "test": "make test"
   },
   "version": "0.2.4",
-  "dependencies": {
-    "xregexp": "=2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "mocha": "=1.18.0",
-    "unexpected": "2.1.8"
+    "unexpected": "2.1.8",
+    "xregexp": "=2.0.0"
   },
   "main": "lib/unicodeRegExp.js",
   "repository": {

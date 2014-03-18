@@ -4,9 +4,35 @@ var unexpected = require('unexpected');
     unicodeRegExp = require('../lib/unicodeRegExp');
 
 describe('unicodeRegExp', function () {
-    describe('#removeCharacterFromCharacterClassRegExp()', function () {
-        var expect = unexpected.clone();
+    var expect = unexpected.clone();
 
+    expect.addAssertion('[not] to match all characters in', function (value) {
+        for (var i = 0 ; i < value.length ; i += 1) {
+            this.assert(this.obj.test(value.charAt(i)));
+        }
+    });
+
+    describe('.letter', function () {
+        it('should accept all Danish characters', function () {
+            expect(unicodeRegExp.letter, 'to match all characters in', 'abcdefghijklmnopqrstuvwxyzæøå');
+        });
+
+        it('should reject numbers', function () {
+            expect(unicodeRegExp.letter, 'not to match all characters in', '123456789');
+        });
+    });
+
+    describe('.number', function () {
+        it('should accept all Arabic numbers', function () {
+            expect(unicodeRegExp.number, 'to match all characters in', '123456789');
+        });
+
+        it('should reject all Danish characters', function () {
+            expect(unicodeRegExp.number, 'not to match all characters in', 'abcdefghijklmnopqrstuvwxyzæøå');
+        });
+    });
+
+    describe('#removeCharacterFromCharacterClassRegExp()', function () {
         expect.addAssertion('[not] to be rewritten to', function (value) {
             this.assert(unicodeRegExp.removeCharacterFromCharacterClassRegExp(this.obj[0], this.obj[1]), 'to equal', value);
         });

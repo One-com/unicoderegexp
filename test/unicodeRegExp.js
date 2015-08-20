@@ -6,9 +6,9 @@ var unexpected = require('unexpected');
 describe('unicodeRegExp', function () {
     var expect = unexpected.clone();
 
-    expect.addAssertion('[not] to match all characters in', function (value) {
+    expect.addAssertion('[not] to match all characters in', function (expect, subject, value) {
         for (var i = 0 ; i < value.length ; i += 1) {
-            this.assert(this.obj.test(value.charAt(i)));
+            expect(value.charAt(i), '[not] to match', subject);
         }
     });
 
@@ -33,8 +33,8 @@ describe('unicodeRegExp', function () {
     });
 
     describe('#removeCharacterFromCharacterClassRegExp()', function () {
-        expect.addAssertion('[not] to be rewritten to', function (value) {
-            this.assert(unicodeRegExp.removeCharacterFromCharacterClassRegExp(this.obj[0], this.obj[1]), 'to equal', value);
+        expect.addAssertion('[not] to be rewritten to', function (expect, subject, value) {
+            expect(unicodeRegExp.removeCharacterFromCharacterClassRegExp(subject[0], subject[1]), 'to equal', value);
         });
 
         it('should handle an empty character class', function () {

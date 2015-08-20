@@ -16,8 +16,8 @@
   "version": "0.3.1",
   "dependencies": {},
   "devDependencies": {
-    "mocha": "=1.18.0",
-    "unexpected": "2.1.8",
+    "mocha": "2.2.5",
+    "unexpected": "9.6.0",
     "xregexp": "=2.0.0"
   },
   "main": "lib/unicodeRegExp.js",

@@ -156,7 +156,7 @@ describe('unicodeRegExp', function () {
 
     describe('expandCldrUnicodeSetIdToCharacterClass', function () {
         expect.addAssertion('[not] to be expanded to character class satisfying', function (expect, subject, value) {
-            expect(unicodeRegExp.expandCldrUnicodeSetIdToCharacterClass(subject).source, 'to equal', '[' + (value[1] ? '^' : '') + value[0].source + ']');
+            expect(unicodeRegExp.expandCldrUnicodeSetIdToCharacterClass(subject).source, 'to equal', '[' + (value[1] ? '^' : '') + value[0].source.replace(/^\[|\]$/g, '') + ']');
         });
 
         it('to expand [:S:] to the "symbol" character class, negated', function () {

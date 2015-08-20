@@ -153,4 +153,26 @@ describe('unicodeRegExp', function () {
             expect([/[0-9a-z]/, 'z'], 'to be rewritten to', /[0-9a-y]/)
         });
     });
+
+    describe('expandCldrUnicodeSetIdToCharacterClass', function () {
+        expect.addAssertion('[not] to be expanded to character class satisfying', function (expect, subject, value) {
+            expect(unicodeRegExp.expandCldrUnicodeSetIdToCharacterClass(subject).source, 'to equal', '[' + (value[1] ? '^' : '') + value[0].source + ']');
+        });
+
+        it('to expand [:S:] to the "symbol" character class, negated', function () {
+            expect('[:S:]', 'to be expanded to character class satisfying', [unicodeRegExp.symbol]);
+        });
+
+        it('to expand [:^S:] to the "symbol" character class, negated', function () {
+            expect('[:^S:]', 'to be expanded to character class satisfying', [unicodeRegExp.symbol, true]);
+        });
+
+        it('to expand [:digit:] to the "symbol" character class, negated', function () {
+            expect('[:digit:]', 'to be expanded to character class satisfying', [unicodeRegExp.number]);
+        });
+
+        it('to expand [:^digit:] to the "symbol" character class, negated', function () {
+            expect('[:^digit:]', 'to be expanded to character class satisfying', [unicodeRegExp.number, true]);
+        });
+    });
 });

@@ -37,3 +37,9 @@ unicodeRegExp.spliceCharacterClassRegExps(/[a-b]/, /[c-d]/); // /[a-bc-d]/
 
 The info about which characters belong to which classes was taken from the
 [XRegExp](http://xregexp.com/) library and its [Unicode plugin](http://xregexp.com/plugins/#unicode).
+
+License
+-------
+
+Unicoderegexp is licensed under a standard 3-clause BSD license -- see the
+`LICENSE` file for details.

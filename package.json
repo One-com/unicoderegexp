@@ -1,6 +1,7 @@
 {
   "name": "unicoderegexp",
   "description": "Regular expressions for various Unicode character classes extracted from XRegExp",
+  "license": "BSD-3-Clause",
   "keywords": [
     "unicode",
     "regular expression",
